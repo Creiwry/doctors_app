@@ -43,7 +43,7 @@ patients = Patient.all
 
 #Data for Appointments
 100.times do |c|
-  c = Appointment.create(doctor: doctors.sample, patient: patients.sample, city: cities.sample, date: Faker::Date.in_date_period)
+  c = Appointment.create(doctor: doctors.sample, patient: patients.sample, city: cities.sample, date: Faker::Time.forward(days: 23, period: :day))
 end
 
 #Data for Doctor_Specialty
