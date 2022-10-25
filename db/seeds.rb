@@ -8,21 +8,46 @@
 
 require 'faker'
 
+#Data for Specialties
+
 specialty =["Dermatology","Diagnostic radiology","Family medicine","Internal medicine","Neurology","Obstetrics and gynecology","Ophthalmology","Pediatrics","Psychiatry","Radiation oncology","Urology"]
 
-
-
-100.times do |a|
-  a = Doctor.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, specialty: specialty.sample, zip_code: Faker::Address.zip_code)
+specialty.each do |spec|
+  Specialty.create(name: spec)
 end
 
-100.times do |b|
-  b = Patient.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name)
+specialties = Specialty.all
+
+#Data for Cities
+
+100.times do |z|
+  z = City.create(name: Faker::Address.city)
+end
+
+cities = City.all
+
+
+#Data for Doctors
+100.times do |a|
+  a = Doctor.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, zip_code: Faker::Address.zip_code, city: cities.sample)
 end
 
 doctors = Doctor.all
+
+#Data for Patients
+100.times do |b|
+  b = Patient.create(first_name: Faker::Name.first_name, last_name: Faker::Name.last_name, city: cities.sample)
+end
+
 patients = Patient.all
 
+#Data for Appointments
 100.times do |c|
-  c = Appointment.create(doctor: doctors.sample, patient: patients.sample, date: Faker::Date.in_date_period)
+  c = Appointment.create(doctor: doctors.sample, patient: patients.sample, city: cities.sample, date: Faker::Date.in_date_period)
+end
+
+#Data for Doctor_Specialty
+
+doctors.each do |doctor|
+  DoctorSpecialty.create(doctor: doctor, specialty: specialties.sample )
 end
